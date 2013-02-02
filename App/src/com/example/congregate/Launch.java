@@ -48,7 +48,6 @@ public class Launch extends Activity {
         new CountDownTimer(3200, 1000) {
 
 			public void onTick(long millisUntilFinished) {
-
 			}
 
 			public void onFinish() {
