@@ -19,4 +19,9 @@
     <color name="agenda_white">#FFFFFF</color>
     <color name="agenda_gray_dark">#D7D7D7</color>
     <color name="agenda_divider_color">#BBBBBB</color>
+    <color name="dark_purple">#493881</color>
+    <color name="background_purple">#d8ccf8</color>
+    <color name="medium_purple">#6e5aa1</color>
+    <color name="orange">#ffac1b</color>
+    <color name="yellow">#f6e529</color>
 </resources>

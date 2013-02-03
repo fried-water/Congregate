@@ -25,7 +25,9 @@
             android:id="@+id/txtEventDesc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:text="Event Description Goes Here" >
         </TextView>
 
@@ -33,6 +35,8 @@
             android:id="@+id/txtEventLocTime"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text=";event name; is happening @ ;event time; at ;event location;" >
         </TextView>
 

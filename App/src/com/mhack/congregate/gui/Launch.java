@@ -58,6 +58,8 @@ public class Launch extends Activity {
 
 			public void onFinish() {
 
+		        Utility.fillContactsList(Launch.this);
+
 				if (Globals.prefs.contains(Const.phoneNumber) && !"".equalsIgnoreCase(Globals.prefs.getString(Const.phoneNumber, ""))) { 
 					Intent intent = new Intent().setClass(Launch.this, EventList.class);
 					startActivity(intent);
