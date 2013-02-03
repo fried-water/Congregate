@@ -100,92 +100,128 @@ public class CreateEvent extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				String eventName = name.getText().toString();
-				String location = CreateEvent.this.location.getText().toString();
-				String dateString;
-				
 				final ProgressDialog progress = new ProgressDialog(CreateEvent.this);
-				ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-				
 				progress.setIndeterminate(true);
 				progress.setMessage("Retrieving Information...");
 				
 				progress.show();
 				
-				Calendar date = Calendar.getInstance();
-				
-				date.set(year, month, day, hour, min);
-				
-				dateString = Utility.convertDate(date.getTime(), Const.serverDateFormat);
-				
-				JSONObject eventJSON = new JSONObject();
-				
-				try {
-					eventJSON.put("name", eventName);
-					eventJSON.put("location", location);
-					eventJSON.put("description", description.getText().toString());
-					eventJSON.put("owner", Globals.prefs.getString(Const.phoneNumber, ""));
-					eventJSON.put("date", dateString);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Log.d("CREATE EVENT JSON", eventJSON.toString());
-				
-				params.add(new BasicNameValuePair("json", eventJSON.toString()));
-				
-				JSONObject response = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"event", params);
-				
-				if(!DataTransfer.verifyEMPStatus(response))
-				{
-					Toast.makeText(getApplicationContext(), "Error Creating Event", Toast.LENGTH_LONG).show();
-					progress.dismiss();
-					return;
-				}
-				
-				for(ContactDTO c : Globals.contactsForEvent) {
-					JSONObject inviteJSON = new JSONObject();
-					params = new ArrayList<NameValuePair>();
+				new Thread(new Runnable() {
 					
-					try {
-						inviteJSON.put("event_name", eventName);
-						inviteJSON.put("guest", c.phoneNumber);
-						inviteJSON.put("owner", Globals.prefs.getString(Const.phoneNumber, ""));	
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					Log.d("CREATE INVITE JSON", inviteJSON.toString());
-					
-					params.add(new BasicNameValuePair("json", inviteJSON.toString()));
-					
-					response = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"invite", params);
-					
-					if(DataTransfer.verifyEMPStatus(response))
-					{
-						Toast.makeText(getApplicationContext(), "Error Inviting " + c.name, Toast.LENGTH_LONG).show();
-					}
-					
-					response = DataTransfer.getJSONResult(getApplicationContext(), Const.url+"register?number="+c.phoneNumber);
-					
-					if(DataTransfer.verifyEMPStatus(response))
-					{
-						Toast.makeText(getApplicationContext(), "Error Checking " + c.name, Toast.LENGTH_LONG).show();
-					}
-					
-					try {
-						if(response.getString("is_registered").equals("false")) {
-							Utility.sendSMS(c.phoneNumber, "Hey " + c.name + ", wanna come to " + eventName + " on " + 
-						Utility.convertDate(date.getTime(), Const.appDateFormat) + " at " + location + "?");
+					@Override
+					public void run() {
+						String eventName = name.getText().toString();
+						String location = CreateEvent.this.location.getText().toString();
+						String dateString;
+						
+						
+						ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+						
+						
+						
+						Calendar date = Calendar.getInstance();
+						
+						date.set(year, month, day, hour, min);
+						
+						dateString = Utility.convertDate(date.getTime(), Const.serverDateFormat);
+						
+						JSONObject eventJSON = new JSONObject();
+						
+						try {
+							eventJSON.put("name", eventName);
+							eventJSON.put("location", location);
+							eventJSON.put("description", description.getText().toString());
+							eventJSON.put("owner", Globals.prefs.getString(Const.phoneNumber, ""));
+							eventJSON.put("date", dateString);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Log.d("CREATE EVENT JSON", eventJSON.toString());
+						
+						params.add(new BasicNameValuePair("json", eventJSON.toString()));
+						
+						JSONObject response = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"event", params);
+						
+						if(!DataTransfer.verifyEMPStatus(response))
+						{
+							Toast.makeText(getApplicationContext(), "Error Creating Event", Toast.LENGTH_LONG).show();
+							runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									progress.dismiss();
+								}
+							});
+							
+							return;
+						}
+						
+						for(final ContactDTO c : Globals.contactsForEvent) {
+							JSONObject inviteJSON = new JSONObject();
+							params = new ArrayList<NameValuePair>();
+							
+							try {
+								inviteJSON.put("event_name", eventName);
+								inviteJSON.put("guest", c.phoneNumber);
+								inviteJSON.put("owner", Globals.prefs.getString(Const.phoneNumber, ""));	
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							Log.d("CREATE INVITE JSON", inviteJSON.toString());
+							
+							params.add(new BasicNameValuePair("json", inviteJSON.toString()));
+							
+							response = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"invite", params);
+							
+							if(!DataTransfer.verifyEMPStatus(response))
+							{
+								runOnUiThread(new Runnable() {
+									
+									@Override
+									public void run() {
+										Toast.makeText(getApplicationContext(), "Error Inviting " + c.name, Toast.LENGTH_LONG).show();
+									}
+								});
+							}
+							
+							response = DataTransfer.getJSONResult(getApplicationContext(), Const.url+"register?number="+c.phoneNumber);
+							
+							if(!DataTransfer.verifyEMPStatus(response))
+							{
+								runOnUiThread(new Runnable() {
+									
+									@Override
+									public void run() {
+										Toast.makeText(getApplicationContext(), "Error Checking " + c.name, Toast.LENGTH_LONG).show();
+									}
+								});
+							}
+							
+							try {
+								if(response.getString("is_registered").equals("false")) {
+									Utility.sendSMS(c.phoneNumber, "Hey " + c.name + ", wanna come to " + eventName + " on " + 
+								Utility.convertDate(date.getTime(), Const.appDateFormat) + " at " + location + "?");
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								progress.dismiss();
+							}
+						});
+						
 					}
-				}
+				}).start();
 				
-				progress.dismiss();
 			}
 		});
 	}

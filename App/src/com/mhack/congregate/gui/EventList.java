@@ -41,12 +41,11 @@ public class EventList extends Activity {
 	
 	public void onResume() { 
 		super.onResume();
-		
 		final ProgressDialog progress = new ProgressDialog(this);
-		
 		
 		if(Utility.isNetworkAvailable(this))
 		{
+
 			progress.setIndeterminate(true);
 			progress.setMessage("Retrieving Information...");
 			progress.show();
@@ -59,6 +58,19 @@ public class EventList extends Activity {
 					JSONArray temp = null;
 					
 					response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "event?host="+Globals.prefs.getString(Const.phoneNumber, ""));
+					
+					if(response== null) {
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								progress.dismiss();
+								
+							}
+							
+						});
+						return;
+					}
 					
 					Log.d("JSON HOSTED EVENTS", response!= null? response.toString(): "null");
 					
