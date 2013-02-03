@@ -44,7 +44,7 @@ public class ContactSelection extends Activity {
 
 	public void setupAdapter() {
 		adapter = new ContactsAdapter(ContactSelection.this,
-				R.layout.contact_cell, Globals.allContactsInAddressBook);
+				R.layout.contact_cell);
 		listView.setAdapter(adapter);
 
 		Log.d("", "== num contents in contacts list: " + Globals.allContactsInAddressBook.size());

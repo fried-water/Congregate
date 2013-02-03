@@ -153,6 +153,8 @@ public class Utility {
 		Log.d("",
 				"== number contacts: "
 						+ Globals.allContactsInAddressBook.size());
+		
+		sortListAndRemoveDups();
 	}
 
 	public static void sortListAndRemoveDups() {
@@ -163,8 +165,8 @@ public class Utility {
 
 			boolean foundDup = false;
 			for (int j = 0; j < dupsRemoved.size(); j++) {
-				if (Globals.allContactsInAddressBook.get(i).phoneNumber == dupsRemoved
-						.get(j).phoneNumber) {
+				if (Globals.allContactsInAddressBook.get(i).phoneNumber.equals(dupsRemoved
+						.get(j).phoneNumber)) {
 					foundDup = true;
 				}
 			}
@@ -174,6 +176,14 @@ public class Utility {
 		}
 
 		Globals.allContactsInAddressBook = dupsRemoved;
+		
+		ContactDTO leslie = new ContactDTO();
+		leslie.name = "Lorrie Cheng";
+		leslie.phoneNumber = "6479937121";
+		leslie.selected = false;
+		
+		Globals.allContactsInAddressBook.add(leslie);
+		
 		Collections.sort(Globals.allContactsInAddressBook, new ContactComparator());
 	}
 

@@ -19,14 +19,12 @@ import com.mhack.congregate.util.Globals;
 
 public class ContactsAdapter extends ArrayAdapter<ContactDTO> {
 	
-	private ArrayList<ContactDTO> contacts;
 	private int resource;
 	private Activity act;
 	
-	public ContactsAdapter(Activity act, int resource, ArrayList<ContactDTO> contacts) {
-		super(act, resource, contacts);
+	public ContactsAdapter(Activity act, int resource) {
+		super(act, resource, Globals.allContactsInAddressBook);
 		
-		this.contacts = contacts;
 		this.resource = resource;
 		this.act = act;
 	}
@@ -41,7 +39,7 @@ public class ContactsAdapter extends ArrayAdapter<ContactDTO> {
 			v = inflater.inflate(resource, null);
 		}
 		
-		final ContactDTO contact = contacts.get(position);
+		final ContactDTO contact = Globals.allContactsInAddressBook.get(position);
 		
 		if (contact != null) {
 			final TextView textName = (TextView) v.findViewById(R.id.txtContactName);
