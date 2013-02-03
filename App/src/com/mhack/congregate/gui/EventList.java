@@ -49,7 +49,6 @@ public class EventList extends Activity {
 		{
 			progress.setIndeterminate(true);
 			progress.setMessage("Retrieving Information...");
-			
 			progress.show();
 			
 			new Thread(new Runnable() {
