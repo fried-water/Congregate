@@ -106,4 +106,8 @@ public class Utility {
 	    SmsManager smsManager = SmsManager.getDefault();
 	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 	}
+	
+	public static void fillContactsList() { 
+		
+	}
 }
