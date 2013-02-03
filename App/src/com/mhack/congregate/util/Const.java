@@ -9,4 +9,6 @@ public class Const {
 	
 	public final static String eventName = "eventName";
 	public final static String hostId = "hostId";
+	public final static String serverDateFormat = "hh:mmaa dd/MM/yy";
+	public final static String appDateFormat = "MMM d @ h:mma";
 }
