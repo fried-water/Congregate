@@ -18,18 +18,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Create Event" />
+
         <EditText
             android:id="@+id/txtEventName"
             android:layout_width="fill_parent"
-            android:layout_height="125dp"
+            android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Event Description" />
+            android:hint="Event Name"
+            android:maxLines="1" />
+
         <EditText
             android:id="@+id/txtEventDesc"
             android:layout_width="fill_parent"
             android:layout_height="125dp"
             android:ems="10"
-            android:hint="Event Description" >
+            android:hint="Event Description"
+            android:maxLines="5" >
 
             <requestFocus />
         </EditText>
@@ -39,41 +43,78 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Event Location" >
+            android:hint="Event Location"
+            android:maxLines="1" >
 
             <requestFocus />
         </EditText>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtDateChosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Date: Not yet selected" />
+
+        <TextView
+            android:id="@+id/txtTimeChosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Time: Not yet selected" />
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
 
             <Button
-                android:layout_weight="0.5"
                 android:id="@+id/btnChooseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:text="Choose Date" />
 
             <Button
-                android:layout_weight="0.5"
                 android:id="@+id/btnChooseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:text="Choose Time" />
-
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
             android:id="@+id/btnChooseContacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:text="Invite Contacts" />
-        
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_weight="0.5"
+                android:id="@+id/txtNumPeopleComing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="So far you have invited 0 people" />
+
+            <Button
+                android:id="@+id/btnViewGuests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="View people invited" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

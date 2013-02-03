@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,6 +32,8 @@ public class Registration extends Activity {
 
 	public void onResume() {
 		super.onResume();
+
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
 
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		Log.d("", "== btn register is: " + btnRegister);
@@ -75,7 +78,7 @@ public class Registration extends Activity {
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
+						dialog.dismiss();
 					}
 				});
 
