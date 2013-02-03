@@ -57,7 +57,7 @@ public class ManageEvent extends Activity {
 			@Override
 			public void run() {
 				JSONObject response;
-				JSONArray temp;
+				JSONArray temp = null;
 				
 				response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "message?host="+Globals.prefs.getString(Const.phoneNumber, "")+
 						"&name=" + Globals.currentEvent.name);
