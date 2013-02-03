@@ -2,7 +2,10 @@ package com.mhack.congregate.gui;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -175,7 +178,92 @@ public class ManageEvent extends Activity {
 					
 					EditText txtMesssage = (EditText)textEntryView.findViewById(R.id.txtMessage);
 					if (txtMesssage.getText().toString().length() > 0) { 
-						//TODO: send messages to everyone
+						final ProgressDialog progress = new ProgressDialog(ManageEvent.this);
+						final String message = txtMesssage.getText().toString();
+						
+						progress.setIndeterminate(true);
+						progress.setMessage("Sending Messages...");
+						progress.show();
+						
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								JSONObject response = null;
+								JSONArray guests;
+								ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+								
+								JSONObject messageJSON = new JSONObject();
+								
+								try {
+									messageJSON.put("event_name", Globals.currentEvent.name);
+									messageJSON.put("message", message);
+									messageJSON.put("owner", Globals.prefs.getString(Const.phoneNumber, ""));	
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								try {
+									response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "invite?host="+Globals.prefs.getString(Const.phoneNumber, "")+
+											"&name=" + URLEncoder.encode(Globals.currentEvent.name, "utf-8"));
+								} catch (UnsupportedEncodingException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+								if(response== null) {
+									runOnUiThread(new Runnable() {
+
+										@Override
+										public void run() {	
+											progress.dismiss();
+											Toast.makeText(getApplicationContext(), "Error Retreiving Guests.", Toast.LENGTH_LONG).show();
+										}
+										
+									});
+									return;
+								}
+								
+								try {
+									guests = response.getJSONArray("data");
+									
+									for(int i =0;i < guests.length();i++) {
+										JSONObject guest = (JSONObject)guests.get(i);
+										
+										if(guest.getInt("status") !=  1)
+											continue;
+										
+										if(Utility.isRegistered(getApplicationContext(), guest.getString("guest"))) {
+											params = new ArrayList<NameValuePair>();
+											
+											messageJSON.put("recipient", guest.getString("guest"));
+											
+											Log.d("CREATE MESSAGE JSON", messageJSON.toString());
+											
+											params.add(new BasicNameValuePair("json", messageJSON.toString()));
+											
+											response = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"message", params);
+										} else {
+											Utility.sendSMS(guest.getString("guest"), message);
+										}
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								runOnUiThread(new Runnable() {
+									
+									@Override
+									public void run() {
+										progress.dismiss();
+									}
+								});
+								
+							}
+						}).start();
+						
 					} else { 
 						Toast.makeText(getApplicationContext(), "You have not entered a message.", Toast.LENGTH_LONG).show();
 					}

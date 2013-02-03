@@ -6,7 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -159,6 +165,43 @@ public class Utility {
 		}
 		
 		return "";
+	}
+	
+	public static boolean isRegistered(Context ctx, String phoneNumber) {
+		JSONObject response = DataTransfer.getJSONResult(ctx, Const.url+"register?number="+phoneNumber);
+		
+		try {
+			return response.getString("is_registered").equals("true");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	public static JSONObject updateStatus(Context ctx, String eventName, String eventHost, String guest, int status) {
+		JSONObject statusJSON = new JSONObject(), response;
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		
+		try {
+			statusJSON.put("event_name", eventName);
+			statusJSON.put("owner", eventHost);
+			statusJSON.put("guest", guest);
+			statusJSON.put("status", status);
+			
+			params.add(new BasicNameValuePair("json", statusJSON.toString()));
+			
+			response =  DataTransfer.postJSONResult(ctx, Const.url+"invite", params);
+			Log.d("UPDATE STATUS", response.toString());
+			
+			return response;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public static void clearContactsInParty() { 
