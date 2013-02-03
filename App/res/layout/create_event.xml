@@ -1,10 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
-    android:background="@color/background_purple"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_alignParentTop="true" >
+    android:layout_alignParentTop="true"
+    android:background="@color/background_purple" >
 
     <LinearLayout
         android:id="@+id/layoutMain"
@@ -15,42 +15,42 @@
         <TextView
             android:id="@+id/txtEvenTitle"
             style="@style/text_event"
-            android:textColor="@color/medium_purple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Create Event" />
+            android:text="Create Event"
+            android:textColor="@color/medium_purple" />
 
         <EditText
             android:id="@+id/txtEventName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="@color/black"
             android:hint="Event Name"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/black" />
 
         <EditText
-            android:textColor="@color/black"
-            android:gravity="bottom"
             android:id="@+id/txtEventDesc"
             android:layout_width="fill_parent"
             android:layout_height="125dp"
             android:ems="10"
+            android:gravity="bottom"
             android:hint="Event Description"
-            android:maxLines="5" >
+            android:maxLines="5"
+            android:textColor="@color/black" >
 
             <requestFocus />
         </EditText>
 
         <EditText
-            android:textColor="@color/dark_purple"
             android:id="@+id/txtEvenLocation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Event Location"
-            android:maxLines="1" >
+            android:maxLines="1"
+            android:textColor="@color/dark_purple" >
 
             <requestFocus />
         </EditText>
@@ -64,13 +64,13 @@
             android:text="Date: Not yet selected" />
 
         <TextView
-            android:textColor="@color/dark_purple"
             android:id="@+id/txtTimeChosen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
-            android:text="Time: Not yet selected" />
+            android:text="Time: Not yet selected"
+            android:textColor="@color/dark_purple" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -83,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:background="@drawable/selector_btn"
                 android:text="Choose Date" />
 
             <Button
@@ -90,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:background="@drawable/selector_btn"
                 android:text="Choose Time" />
         </LinearLayout>
 
@@ -99,23 +101,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:background="@drawable/selector_btn"
             android:text="Invite Contacts" />
 
         <TextView
-            android:textColor="@color/dark_purple"
             android:id="@+id/txtNumPeopleComing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:text="So far you have invited 0 people" />
+            android:text="So far you have invited 0 people"
+            android:textColor="@color/dark_purple" />
 
         <Button
-            android:layout_marginTop="10dp"
             android:id="@+id/btnSubmitEvent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn"
             android:text="Create and Send Invites" />
     </LinearLayout>
 

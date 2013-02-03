@@ -293,6 +293,7 @@ public class CreateEvent extends Activity {
 	public void onDestroy() { 
 		super.onDestroy();
 		
-		Globals.contactsForEvent.clear();
+		//Globals.contactsForEvent.clear();
+		Utility.clearContactsInParty();
 	}
 }

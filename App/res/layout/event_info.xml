@@ -63,6 +63,7 @@
         android:layout_alignTop="@+id/txtUserName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
+        android:background="@drawable/selector_btn"
         android:text="@string/register" />
 
 </RelativeLayout>
