@@ -101,16 +101,16 @@ public class DataTransfer {
 	 * @param url
 	 * @return
 	 */
-	public static JSONObject getJSONResult(Context ctx, final String url) {
+	public static JSONObject getJSONResult(Context ctx, String url) {
 		if (!Utility.isNetworkAvailable(ctx))
 			return null;
 
-		try {
+		try {	
 			final HttpClient client = new DefaultHttpClient();
 			final HttpGet get = new HttpGet(url);
 			final HttpResponse responsePost = client.execute(get);
-			final HttpEntity resEntity = responsePost.getEntity();
-
+			final HttpEntity resEntity = responsePost.getEntity();	
+			
 			boolean DEBUG = true;
 			if (DEBUG) {
 				Log.d("", "[JSON-ENV] url:  " + url);

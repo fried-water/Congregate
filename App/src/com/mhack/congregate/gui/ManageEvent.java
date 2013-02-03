@@ -1,5 +1,8 @@
 package com.mhack.congregate.gui;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,11 +59,16 @@ public class ManageEvent extends Activity {
 			
 			@Override
 			public void run() {
-				JSONObject response;
+				JSONObject response = null;
 				JSONArray temp = null;
 				
-				response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "message?host="+Globals.prefs.getString(Const.phoneNumber, "")+
-						"&name=" + Globals.currentEvent.name);
+				try {
+					response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "message?host="+Globals.prefs.getString(Const.phoneNumber, "")+
+							"&name=" + URLEncoder.encode(Globals.currentEvent.name, "utf-8"));
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				if(response== null) {
 					runOnUiThread(new Runnable() {
@@ -90,7 +98,7 @@ public class ManageEvent extends Activity {
 					
 					@Override
 					public void run() {
-						LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layout_message_group);
+						LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layout_message_wall);
 						mainLayout.removeAllViews();
 						
 						View view = null;

@@ -219,6 +219,8 @@ public class CreateEvent extends Activity {
 							}
 						});
 						
+						finish();
+						
 					}
 				}).start();
 				
