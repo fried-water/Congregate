@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.mhack.congregate.R;
+import com.mhack.congregate.util.Globals;
 
 public class CreateEvent extends Activity {
 
@@ -71,6 +72,15 @@ public class CreateEvent extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent().setClass(CreateEvent.this, ContactSelection.class);
 				startActivity(intent);
+			}
+		});
+		
+		Button btnSendInvites = (Button) findViewById(R.id.btnSubmitEvent);
+		btnSendInvites.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//create and send invites here!!! 
 			}
 		});
 	}
@@ -136,4 +146,9 @@ public class CreateEvent extends Activity {
 		}
 	};
 
+	public void onDestroy() { 
+		super.onDestroy();
+		
+		Globals.contactsForEvent.clear();
+	}
 }
