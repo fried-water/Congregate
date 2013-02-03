@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.SmsManager;
 
 public class Utility {
 
@@ -59,7 +60,13 @@ public class Utility {
 		return contents.toString();
 	}
 	
-	public static String convertDate(String dateString) {
+	public static String convertDate(Date date, String format) {
+		SimpleDateFormat newDt = new SimpleDateFormat(format);
+		
+		return newDt.format(date);
+	}
+	
+	public static String convertDate(String dateString, String srcFormat, String destFormat) {
 		String format = "hh:mma dd/MM/yyyy";
 		
 		SimpleDateFormat dt = new SimpleDateFormat(format);
@@ -78,6 +85,10 @@ public class Utility {
 	
 	public static String stripExtraCharsFromPhone(String phoneNum) { 
 		
+		if(phoneNum == null || phoneNum.length() == 0) {
+			return "";
+		}
+		
 		phoneNum = phoneNum.replace("-", "");
 		phoneNum = phoneNum.replace("(", "");
 		phoneNum = phoneNum.replace(")", "");
@@ -89,5 +100,10 @@ public class Utility {
 			phoneNum = phoneNum.substring(1);
 		
 		return phoneNum;
+	}
+	
+	public static void sendSMS(String phoneNumber, String message) {
+	    SmsManager smsManager = SmsManager.getDefault();
+	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 	}
 }

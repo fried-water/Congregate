@@ -107,7 +107,7 @@ public class EventList extends Activity {
 										view = getLayoutInflater().inflate(R.layout.event_cell_invitation, mainLayout, false);
 										
 										((TextView)view.findViewById(R.id.txt_event_name)).setText(event.getString("name"));
-										((TextView)view.findViewById(R.id.txt_event_details)).setText("On " + Utility.convertDate(event.getString("date")) + " at " + event.getString("location"));
+										((TextView)view.findViewById(R.id.txt_event_details)).setText("On " + Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat) + " at " + event.getString("location"));
 										
 										switch(event.getInt("status"))
 										{
@@ -156,7 +156,7 @@ public class EventList extends Activity {
 										view = getLayoutInflater().inflate(R.layout.event_cell_manage_event, mainLayout, false);
 										
 										((TextView)view.findViewById(R.id.txt_event_name)).setText(event.getString("name"));
-										((TextView)view.findViewById(R.id.txt_event_date)).setText("At " + Utility.convertDate(event.getString("date")));
+										((TextView)view.findViewById(R.id.txt_event_date)).setText("At " + Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat));
 										((TextView)view.findViewById(R.id.txt_event_confirm_count)).setText(""+event.getInt("confirm_count"));
 									
 										

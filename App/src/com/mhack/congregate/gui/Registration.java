@@ -92,7 +92,7 @@ public class Registration extends Activity {
 										@Override
 										public void run() {
 											progress.dismiss();
-											Toast.makeText(getApplicationContext(), "Error Registering2.", Toast.LENGTH_LONG).show();
+											Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG).show();
 											//launchDialogue("Error Registering.");
 										}
 									});
@@ -130,7 +130,7 @@ public class Registration extends Activity {
 										@Override
 										public void run() {
 											progress.hide();
-											Toast.makeText(getApplicationContext(), "Error Registering3.", Toast.LENGTH_LONG).show();
+											Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG).show();
 											//launchDialogue("Error Registering.");
 										}
 									});
