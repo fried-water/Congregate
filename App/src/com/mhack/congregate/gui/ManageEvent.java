@@ -111,7 +111,7 @@ public class ManageEvent extends Activity {
 								Log.d("Message", message.toString());
 								view = getLayoutInflater().inflate(R.layout.message_cell, mainLayout, false);
 								
-								((TextView)view.findViewById(R.id.txtTimeMessage)).setText(message.getString("You said on " + dateString));
+								((TextView)view.findViewById(R.id.txtTimeMessage)).setText("You said on " + dateString);
 								((TextView)view.findViewById(R.id.txtMessage)).setText(message.getString("message"));
 							
 							} catch (JSONException e) {
