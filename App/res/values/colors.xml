@@ -24,4 +24,6 @@
     <color name="medium_purple">#6e5aa1</color>
     <color name="orange">#ffac1b</color>
     <color name="yellow">#f6e529</color>
+    <color name="grey">#99979d</color>
+    <color name="dark_orange">#e48e1e</color>
 </resources>

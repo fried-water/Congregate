@@ -144,8 +144,7 @@ public class Registration extends Activity {
 	}
 
 	public void launchDialogue(String message) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				getBaseContext());
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
 		alertDialogBuilder.setTitle("Error");

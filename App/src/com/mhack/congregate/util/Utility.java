@@ -161,6 +161,17 @@ public class Utility {
 		return "";
 	}
 	
+	public static String numPeopleComing() { 
+		
+		int count = 0;
+		for (ContactDTO contact : Globals.allContactsInAddressBook) { 
+			if (contact.selected)
+				count++;
+		}
+		
+		return count + "";
+	}
+	
 	public static void clearContactsInParty() { 
 		
 		for (ContactDTO c : Globals.allContactsInAddressBook) { 

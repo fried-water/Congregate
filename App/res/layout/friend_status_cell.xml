@@ -10,10 +10,11 @@
     <TextView
         android:id="@+id/txtContactName"
         style="@style/text_event"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Persons Name" />
+        android:layout_gravity="center"
+        android:text="Persons Name"
+        android:textColor="@color/orange" />
 
     <LinearLayout
         android:id="@+id/layout"
@@ -36,7 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radio_select_going"
-                android:text="going" />
+                android:text="going"
+                android:textColor="@color/dark_purple" />
 
             <RadioButton
                 android:id="@+id/radio_maybe"
@@ -44,7 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radio_select_maybe"
-                android:text="maybe" />
+                android:text="maybe"
+                android:textColor="@color/dark_purple" />
 
             <RadioButton
                 android:id="@+id/radio_not_going"
@@ -52,7 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radio_select_not_going"
-                android:text="not going" />
+                android:text="not going"
+                android:textColor="@color/dark_purple" />
         </RadioGroup>
     </LinearLayout>
 

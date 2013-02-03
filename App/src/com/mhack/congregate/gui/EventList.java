@@ -154,6 +154,10 @@ public class EventList extends Activity {
 									
 									mainLayout.addView(view);
 								}
+							} else { 
+								view = getLayoutInflater().inflate(R.layout.event_none, mainLayout, false);
+								mainLayout.addView(view);
+								
 							}
 							
 							view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
@@ -201,6 +205,9 @@ public class EventList extends Activity {
 									
 									mainLayout.addView(view);
 								}
+							} else { 
+								view = getLayoutInflater().inflate(R.layout.event_none, mainLayout, false);
+								mainLayout.addView(view);
 							}
 							
 							progress.dismiss();

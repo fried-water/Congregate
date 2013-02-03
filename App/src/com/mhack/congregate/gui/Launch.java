@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -51,6 +54,14 @@ public class Launch extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         
+    	Animation animationToLeft = new TranslateAnimation(0, 0, 600, 0);
+    	animationToLeft.setDuration(2500); 
+    	animationToLeft.setRepeatMode(0);
+    	animationToLeft.setRepeatCount(0);
+    	
+    	TextView title = (TextView) findViewById(R.id.fullscreen_content);
+    	title.setAnimation(animationToLeft);
+    	
         new CountDownTimer(3200, 1000) {
 
 			public void onTick(long millisUntilFinished) {
@@ -59,7 +70,7 @@ public class Launch extends Activity {
 			public void onFinish() {
 
 		        Utility.fillContactsList(Launch.this);
-
+		    	
 				if (Globals.prefs.contains(Const.phoneNumber) && !"".equalsIgnoreCase(Globals.prefs.getString(Const.phoneNumber, ""))) { 
 					Intent intent = new Intent().setClass(Launch.this, EventList.class);
 					startActivity(intent);

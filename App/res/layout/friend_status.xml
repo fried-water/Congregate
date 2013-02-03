@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
+    android:background="@color/background_purple"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true" >
@@ -14,6 +15,7 @@
         <TextView
             android:id="@+id/txtEvenTitle"
             style="@style/text_event"
+            android:textColor="@color/dark_purple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

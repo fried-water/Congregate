@@ -12,6 +12,7 @@
     <TextView
         android:id="@+id/txtTimeMessage"
         style="@style/text_invitation"
+        android:textColor="@color/dark_orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="At ;some time; ;some person; said:" />
@@ -19,9 +20,10 @@
     <TextView
         android:id="@+id/txtMessage"
         style="@style/text_normal"
+        android:textSize="16dp"
+        android:textColor="@color/dark_purple"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message"
-        android:textSize="14dp" />
+        android:text="Message" />
 
 </LinearLayout>

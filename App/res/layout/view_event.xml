@@ -11,16 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Event Name" />
+        android:text="Event Name"
+        android:textColor="@color/dark_purple" />
 
     <RadioGroup
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center"
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <RadioButton
@@ -29,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/radio_select_going"
-            android:text="going" />
+            android:text="going"
+            android:textColor="@color/dark_purple" />
 
         <RadioButton
             android:id="@+id/radio_maybe"
@@ -37,7 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/radio_select_maybe"
-            android:text="maybe" />
+            android:text="maybe"
+            android:textColor="@color/dark_purple" />
 
         <RadioButton
             android:id="@+id/radio_not_going"
@@ -45,28 +48,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/radio_select_not_going"
-            android:text="not going" />
+            android:text="not going"
+            android:textColor="@color/dark_purple" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/txtEventDesc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="event description event description" >
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="event description event description"
+        android:textSize="16dp" >
     </TextView>
 
     <TextView
         android:id="@+id/txtTimeLocation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="event will happen at x at location y" >
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="event will happen at x at location y"
+        android:textSize="12dp"
+        android:textStyle="bold" >
     </TextView>
 
     <TextView
         android:id="@+id/txtmessages"
+        style="@style/text_event"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Messages" >
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Messages"
+        android:textColor="@color/dark_purple"
+        android:textSize="20dp" >
     </TextView>
 
     <ScrollView

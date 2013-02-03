@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white" >
+    android:background="@color/background_purple" >
 
     <TextView
         android:id="@+id/txtRegister"
@@ -11,18 +11,21 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/register" />
+        android:text="@string/register"
+        android:textColor="@color/dark_purple" />
 
     <TextView
         android:id="@+id/txtRegisterDetails"
         style="@style/text_normal"
+        android:textSize="14dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="55dp"
-        android:text="@string/register_details" />
+        android:text="@string/register_details"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/txtUserNumber"
@@ -32,9 +35,11 @@
         android:layout_marginBottom="200dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:maxLength="10"
         android:ems="10"
         android:hint="@string/phone_number"
+        android:imeOptions="actionNext"
+        android:maxLength="10"
+        android:maxLines="1"
         android:numeric="integer" >
     </EditText>
 
@@ -47,7 +52,9 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:ems="10"
-        android:hint="@string/enter_name" >
+        android:hint="@string/enter_name"
+        android:imeOptions="actionDone"
+        android:maxLines="1" >
     </EditText>
 
     <Button
@@ -55,8 +62,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/txtUserName"
-        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
         android:text="@string/register" />
 
 </RelativeLayout>

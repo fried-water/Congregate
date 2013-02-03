@@ -38,7 +38,7 @@ public class CreateEvent extends Activity {
 
 	private int year, month, day, hour, min;
 	private final int DATE_DIALOGUE = 34, TIME_DIALOGUE = 35;
-	private TextView txtDateView, txtTimeView;
+	private TextView txtDateView, txtTimeView, txtNumPeopleInvited;
 	private EditText name, location, description; 
 	
 	@Override
@@ -48,6 +48,7 @@ public class CreateEvent extends Activity {
 
 		txtDateView = (TextView) findViewById(R.id.txtDateChosen);
 		txtTimeView = (TextView) findViewById(R.id.txtTimeChosen);
+		txtNumPeopleInvited = (TextView) findViewById(R.id.txtNumPeopleComing);
 		
 		name = (EditText) findViewById(R.id.txtEventName);
 		location = (EditText) findViewById(R.id.txtEvenLocation);
@@ -226,6 +227,8 @@ public class CreateEvent extends Activity {
 				
 			}
 		});
+		
+		txtNumPeopleInvited.setText("So far you have invited " + Utility.numPeopleComing() + " people");
 	}
 
 	@Override

@@ -3,8 +3,9 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:background="@color/background_purple"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -19,15 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Manage Event Name" />
+            android:text="Manage Event Name"
+            android:textColor="@color/dark_purple" />
 
         <TextView
             android:id="@+id/txtEventDesc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:text="Event Description Goes Here" >
         </TextView>
 
@@ -60,7 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Message Group" />
+                android:text="Message Group"
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +87,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Invite Friends" />
+                android:text="Invite Friends"
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,18 +112,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="View Invitation Statuses" />
+                android:text="View Invitation Statuses"
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtNumPeopleComing"
-            style="@style/text_normal"
+            style="@style/text_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:text="Message Wall" />
+            android:text="Message Wall"
+            android:textColor="@color/dark_orange" />
 
         <ScrollView
             android:id="@+id/scrollView1"
