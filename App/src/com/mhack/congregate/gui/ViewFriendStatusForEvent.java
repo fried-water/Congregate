@@ -109,8 +109,9 @@ public class ViewFriendStatusForEvent extends Activity {
 								Log.d("Message", guest.toString());
 								view = getLayoutInflater().inflate(R.layout.friend_status_cell, mainLayout, false);
 								
-								((TextView)view.findViewById(R.id.txtContactName)).setText(Utility.getNameFromNumber(guest.getString("guest")));
-							
+								//((TextView)view.findViewById(R.id.txtContactName)).setText(Utility.getNameFromNumber(guest.getString("guest")));
+								((TextView)view.findViewById(R.id.txtContactName)).setText(guest.getString("guest"));
+								
 								((RadioGroup)view.findViewById(R.id.radioGroup1)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
 									
 									@Override
