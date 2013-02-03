@@ -1,7 +1,15 @@
 package com.mhack.congregate.gui;
 
+import java.util.ArrayList;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +18,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mhack.congregate.R;
 import com.mhack.congregate.util.Const;
+import com.mhack.congregate.util.DataTransfer;
 import com.mhack.congregate.util.Globals;
+import com.mhack.congregate.util.Utility;
 
 public class Registration extends Activity {
 
@@ -40,8 +51,8 @@ public class Registration extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				String num = txtNumber.getText().toString();
-				String name = txtName.getText().toString();
+				final String num = txtNumber.getText().toString();
+				final String name = txtName.getText().toString();
 				
 				if ("".equalsIgnoreCase(num)) { 
 					launchDialogue("Please enter a valid 10 digit phone number (no hyphens, spaces, or dots).");
@@ -51,13 +62,79 @@ public class Registration extends Activity {
 					launchDialogue("Please enter your name so your friends know who is contacting them about an event.");
 				} else { 
 					
-					Globals.prefEdit.putString(Const.phoneNumber, num);
-					Globals.prefEdit.putString(Const.name, name);
-					Globals.prefEdit.commit();
+					final ProgressDialog progress = new ProgressDialog(Registration.this);
 					
-					Intent intent = new Intent().setClass(Registration.this,
-							EventList.class);
-					startActivity(intent);
+					
+					if(Utility.isNetworkAvailable(getApplicationContext()))
+					{
+						progress.setIndeterminate(true);
+						progress.setMessage("Registering Information...");
+						
+						progress.show();
+						
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								
+								ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+								
+								JSONObject request = new JSONObject();
+								try {
+									request.put(Const.name, name);
+									request.put("number", Long.parseLong(num.replaceAll("-", "")));
+								} catch (JSONException e) {
+									runOnUiThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											progress.dismiss();
+											Toast.makeText(getApplicationContext(), "Error Registering2.", Toast.LENGTH_LONG).show();
+											//launchDialogue("Error Registering.");
+										}
+									});
+									e.printStackTrace();
+									return;
+								}
+								
+								params.add(new BasicNameValuePair("json", request.toString()));
+								
+								JSONObject res = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"register", params);
+								
+								if(res != null && DataTransfer.verifyEMPStatus(res)) {
+									Globals.prefEdit.putString(Const.phoneNumber, num);
+									Globals.prefEdit.putString(Const.name, name);
+									Globals.prefEdit.commit();
+									
+									runOnUiThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											progress.dismiss();
+										}
+									});
+									
+									
+									
+									Intent intent = new Intent().setClass(Registration.this,
+											EventList.class);
+									startActivity(intent);
+									
+									finish();
+								} else {
+									runOnUiThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											progress.hide();
+											Toast.makeText(getApplicationContext(), "Error Registering3.", Toast.LENGTH_LONG).show();
+											//launchDialogue("Error Registering.");
+										}
+									});
+								}
+							}
+						}).start();
+					}
 				}
 			}
 		});

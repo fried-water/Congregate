@@ -64,7 +64,7 @@
 
     <TextView
         android:layout_gravity="center"
-        android:id="@+id/txt_event_name"
+        android:id="@+id/txt_event_details"
         style="@style/text_time_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

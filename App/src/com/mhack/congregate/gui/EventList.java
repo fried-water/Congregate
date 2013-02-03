@@ -1,16 +1,33 @@
 package com.mhack.congregate.gui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.mhack.congregate.R;
+import com.mhack.congregate.util.Const;
+import com.mhack.congregate.util.DataTransfer;
+import com.mhack.congregate.util.Globals;
+import com.mhack.congregate.util.Utility;
 
 public class EventList extends Activity {
 
@@ -25,43 +42,147 @@ public class EventList extends Activity {
 	public void onResume() { 
 		super.onResume();
 		
-		LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layoutParent);
+		final ProgressDialog progress = new ProgressDialog(this);
 		
-		View view;
 		
-		view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
-		((TextView)view.findViewById(R.id.eventHeader)).setText("Upcoming Events");
-		mainLayout.addView(view);
-		
-		for(int j = 0; j < 1; j++)
+		if(Utility.isNetworkAvailable(this))
 		{
-			view = getLayoutInflater().inflate(R.layout.event_cell_invitation, mainLayout, false);
+			progress.setIndeterminate(true);
+			progress.setMessage("Retrieving Information...");
 			
-			view.setOnClickListener(new View.OnClickListener() {
+			progress.show();
+			
+			new Thread(new Runnable() {
 				
 				@Override
-				public void onClick(View v) {
+				public void run() {
+					JSONObject response;
+					JSONArray temp = null;
+					
+					response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "event?host="+Globals.prefs.getString(Const.phoneNumber, ""));
+					
+					Log.d("JSON HOSTED EVENTS", response!= null? response.toString(): "null");
+					
+					try {
+						temp = response.getJSONArray("data");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					final JSONArray hostedEvents = temp;
+					
+					response = DataTransfer.getJSONResult(getApplicationContext(), Const.url + "event?guest="+Globals.prefs.getString(Const.phoneNumber, ""));
+					
+					Log.d("JSON GUEST EVENTS", response!= null? response.toString(): "null");
+					
+					try {
+						temp = response.getJSONArray("data");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					final JSONArray guestEvents = temp;
+					
+					runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layoutParent);
+							mainLayout.removeAllViews();
+							
+							View view;
+							
+							view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
+							((TextView)view.findViewById(R.id.eventHeader)).setText("Upcoming Events");
+							mainLayout.addView(view);
+							
+							if(guestEvents.length() > 0) {
+								for(int i = 0; i < guestEvents.length();i++) {
+									try {
+										JSONObject event = (JSONObject)guestEvents.get(i);
+										
+										Log.d("WOO", event.toString());
+										view = getLayoutInflater().inflate(R.layout.event_cell_invitation, mainLayout, false);
+										
+										((TextView)view.findViewById(R.id.txt_event_name)).setText(event.getString("name"));
+										((TextView)view.findViewById(R.id.txt_event_details)).setText("On " + Utility.convertDate(event.getString("date")) + " at " + event.getString("location"));
+										
+										switch(event.getInt("status"))
+										{
+										case 0:
+											((TextView)view.findViewById(R.id.txt_invitation_from)).setText(event.getString("host") + " has invited you to");
+											break;
+										case 1:
+											((RadioButton)view.findViewById(R.id.radio_going)).setSelected(true);
+											break;
+										case 2:
+											((RadioButton)view.findViewById(R.id.radio_maybe)).setSelected(true);
+											break;
+										case 3:
+											((RadioButton)view.findViewById(R.id.radio_not_going)).setSelected(true);
+											break;
+										}
+									
+										
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									view.setOnClickListener(new View.OnClickListener() {
+										
+										@Override
+										public void onClick(View v) {
+											
+										}
+									});
+									
+									mainLayout.addView(view);
+								}
+							}
+							
+							view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
+							((TextView)view.findViewById(R.id.eventHeader)).setText("Manage Events");
+							mainLayout.addView(view);
+							
+							if(hostedEvents.length() > 0) {
+								for(int i = 0; i < hostedEvents.length();i++) {
+									try {
+										JSONObject event = (JSONObject)hostedEvents.get(i);
+										
+										Log.d("WEE", event.toString());
+										view = getLayoutInflater().inflate(R.layout.event_cell_manage_event, mainLayout, false);
+										
+										((TextView)view.findViewById(R.id.txt_event_name)).setText(event.getString("name"));
+										((TextView)view.findViewById(R.id.txt_event_date)).setText("At " + Utility.convertDate(event.getString("date")));
+										((TextView)view.findViewById(R.id.txt_event_confirm_count)).setText(""+event.getInt("confirm_count"));
+									
+										
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									view.setOnClickListener(new View.OnClickListener() {
+										
+										@Override
+										public void onClick(View v) {
+											
+										}
+									});
+									
+									mainLayout.addView(view);
+								}
+							}
+							
+							progress.dismiss();
+						}
+					});
 					
 				}
-			});
-			
-			mainLayout.addView(view);
-		}
-		
-		for(int j = 0; j < 2; j++)
-		{
-			view = getLayoutInflater().inflate(R.layout.event_cell_event, mainLayout, false);
-			mainLayout.addView(view);
-		}
-		
-		view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
-		((TextView)view.findViewById(R.id.eventHeader)).setText("Manage Events");
-		mainLayout.addView(view);
-		
-		for(int j = 0; j < 2; j++)
-		{
-			view = getLayoutInflater().inflate(R.layout.event_cell_manage_event, mainLayout, false);
-			mainLayout.addView(view);
+			}).start();
 		}
 		
 		Button btnCreateEvent = (Button) findViewById(R.id.btnCreateEvent);
