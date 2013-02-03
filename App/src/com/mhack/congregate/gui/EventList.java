@@ -128,13 +128,13 @@ public class EventList extends Activity {
 											((TextView)view.findViewById(R.id.txt_invitation_from)).setText(event.getString("host") + " has invited you to");
 											break;
 										case 1:
-											((RadioButton)view.findViewById(R.id.radio_going)).setSelected(true);
+											((RadioButton)view.findViewById(R.id.radio_going)).setChecked(true);
 											break;
 										case 2:
-											((RadioButton)view.findViewById(R.id.radio_maybe)).setSelected(true);
+											((RadioButton)view.findViewById(R.id.radio_maybe)).setChecked(true);
 											break;
 										case 3:
-											((RadioButton)view.findViewById(R.id.radio_not_going)).setSelected(true);
+											((RadioButton)view.findViewById(R.id.radio_not_going)).setChecked(true);
 											break;
 										}
 									

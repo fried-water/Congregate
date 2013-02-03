@@ -118,8 +118,6 @@ public class CreateEvent extends Activity {
 						
 						ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 						
-						
-						
 						Calendar date = Calendar.getInstance();
 						
 						date.set(year, month, day, hour, min);
