@@ -22,8 +22,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mhack.congregate.R;
+import com.mhack.congregate.dto.EventDTO;
 import com.mhack.congregate.util.Const;
 import com.mhack.congregate.util.DataTransfer;
 import com.mhack.congregate.util.Globals;
@@ -63,9 +65,9 @@ public class EventList extends Activity {
 						runOnUiThread(new Runnable() {
 
 							@Override
-							public void run() {
+							public void run() {	
 								progress.dismiss();
-								
+								Toast.makeText(getApplicationContext(), "Error Retreiving Events.", Toast.LENGTH_LONG).show();
 							}
 							
 						});
@@ -105,7 +107,7 @@ public class EventList extends Activity {
 							
 							View view;
 							
-							view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
+							view = getLayoutInflater().inflate(R.layout.message_cell, mainLayout, false);
 							((TextView)view.findViewById(R.id.eventHeader)).setText("Upcoming Events");
 							mainLayout.addView(view);
 							
@@ -161,7 +163,7 @@ public class EventList extends Activity {
 							if(hostedEvents.length() > 0) {
 								for(int i = 0; i < hostedEvents.length();i++) {
 									try {
-										JSONObject event = (JSONObject)hostedEvents.get(i);
+										final JSONObject event = (JSONObject)hostedEvents.get(i);
 										
 										Log.d("WEE", event.toString());
 										view = getLayoutInflater().inflate(R.layout.event_cell_manage_event, mainLayout, false);
@@ -170,19 +172,32 @@ public class EventList extends Activity {
 										((TextView)view.findViewById(R.id.txt_event_date)).setText("At " + Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat));
 										((TextView)view.findViewById(R.id.txt_event_confirm_count)).setText(""+event.getInt("confirm_count"));
 									
-										
+										view.setOnClickListener(new View.OnClickListener() {
+											
+											@Override
+											public void onClick(View v) {
+												EventDTO eventDTO = new EventDTO();
+												try {
+													eventDTO.name = event.getString("name");
+													eventDTO.description = event.getString("description");
+													eventDTO.date = Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat);
+													eventDTO.location = event.getString("location");
+												} catch (JSONException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+												
+												Globals.currentEvent = eventDTO;
+												Intent intent = new Intent().setClass(EventList.this, ManageEvent.class);
+												startActivity(intent);
+											}
+										});
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 									
-									view.setOnClickListener(new View.OnClickListener() {
-										
-										@Override
-										public void onClick(View v) {
-											
-										}
-									});
+									
 									
 									mainLayout.addView(view);
 								}
