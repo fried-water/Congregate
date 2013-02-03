@@ -42,12 +42,12 @@ public class EventList extends Activity {
 	public void onResume() { 
 		super.onResume();
 		final ProgressDialog progress = new ProgressDialog(this);
-		progress.setIndeterminate(true);
-		progress.setMessage("Retrieving Information...");
 		
 		if(Utility.isNetworkAvailable(this))
 		{
-			
+
+			progress.setIndeterminate(true);
+			progress.setMessage("Retrieving Information...");
 			progress.show();
 			
 			new Thread(new Runnable() {
