@@ -164,7 +164,7 @@ public class ManageEvent extends Activity {
 		LayoutInflater factory = LayoutInflater.from(this);
 		final View textEntryView = factory.inflate(R.layout.dialogue_with_text, null);
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
 		builder.setTitle("Message for group");
 		builder.setView(textEntryView);
