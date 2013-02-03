@@ -15,7 +15,7 @@ public class ViewFriendStatusForEvent extends Activity {
 	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.contact_cell);
+		setContentView(R.layout.friend_status);
 		
 		if (getIntent()!= null && getIntent().getExtras() != null && getIntent().getExtras().containsKey(Const.eventName)) { 
 			eventName = getIntent().getExtras().getString(Const.eventName);

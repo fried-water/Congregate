@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.mhack.congregate.R;
+import com.mhack.congregate.util.Const;
 
 public class ManageEvent extends Activity {
 
@@ -43,7 +44,10 @@ public class ManageEvent extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
+				
+				//TODO: add to globals thing of contacts added the friends already attending
+				Intent intent = new Intent().setClass(ManageEvent.this, ContactSelection.class);
+				startActivity(intent);
 			}
 		});
 
@@ -52,6 +56,8 @@ public class ManageEvent extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent().setClass(ManageEvent.this, ViewFriendStatusForEvent.class);
+				intent.putExtra(Const.eventName, "ADD EVENT NAME HERE");
+				intent.putExtra(Const.hostId, "ADD HOST ID HERE");
 				startActivity(intent);
 			}
 		});
