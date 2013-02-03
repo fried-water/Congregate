@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,7 +95,7 @@ public class ViewFriendStatusForEvent extends Activity {
 					
 					@Override
 					public void run() {
-						LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layout_message_wall);
+						LinearLayout mainLayout = (LinearLayout)findViewById(R.id.layout_friend_status);
 						mainLayout.removeAllViews();
 						
 						View view = null;
@@ -102,13 +103,25 @@ public class ViewFriendStatusForEvent extends Activity {
 						for(int i = 0; i < guests.length();i++) {
 							try {
 								final JSONObject guest = (JSONObject)guests.get(i);
-								String dateString = Utility.convertDate(guest.getString("time"), Const.serverDateFormat, Const.appDateFormat);
-								
+
 								Log.d("Message", guest.toString());
 								view = getLayoutInflater().inflate(R.layout.friend_status_cell, mainLayout, false);
 								
 								((TextView)view.findViewById(R.id.txtContactName)).setText(guest.getString("guest"));
 							
+								switch(guest.getInt("status"))
+								{
+								case 1:
+									((RadioButton)view.findViewById(R.id.radio_going)).setSelected(true);
+									break;
+								case 2:
+									((RadioButton)view.findViewById(R.id.radio_maybe)).setSelected(true);
+									break;
+								case 3:
+									((RadioButton)view.findViewById(R.id.radio_not_going)).setSelected(true);
+									break;
+								}
+								
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
