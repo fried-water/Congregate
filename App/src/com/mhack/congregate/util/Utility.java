@@ -76,4 +76,18 @@ public class Utility {
 		return newDt.format(date);
 	}
 	
+	public static String stripExtraCharsFromPhone(String phoneNum) { 
+		
+		phoneNum = phoneNum.replace("-", "");
+		phoneNum = phoneNum.replace("(", "");
+		phoneNum = phoneNum.replace(")", "");
+		phoneNum = phoneNum.replace("+", "");
+		phoneNum = phoneNum.replace(" ", "");
+		phoneNum = phoneNum.replaceAll("[a-zA-Z]*", "");
+		
+		if (phoneNum.charAt(0) == '1')
+			phoneNum = phoneNum.substring(1);
+		
+		return phoneNum;
+	}
 }
