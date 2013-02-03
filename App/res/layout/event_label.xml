@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:background="@color/black_overlay"
+    android:background="@color/dark_purple"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
@@ -10,6 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:text="alksdjfasdf"
         style="@style/text_event"/>
 

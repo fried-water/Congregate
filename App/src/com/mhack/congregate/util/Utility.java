@@ -6,14 +6,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Contacts.People;
 import android.telephony.SmsManager;
+import android.util.Log;
+
+import com.mhack.congregate.dto.ContactDTO;
 
 public class Utility {
 
@@ -107,7 +111,61 @@ public class Utility {
 	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 	}
 	
-	public static void fillContactsList() { 
+	public static void fillContactsList(Activity act) { 
 		
+		Globals.allContactsInAddressBook.clear();
+		
+        String[] projection = new String[]{
+                People.NAME,
+                People.NUMBER
+             };
+
+        Cursor c = act.getContentResolver().query(People.CONTENT_URI, projection, null, null, People.NAME + " ASC");
+        c.moveToFirst();
+        int nameCol = c.getColumnIndex(People.NAME);
+        int numCol = c.getColumnIndex(People.NUMBER);
+
+        int nContacts = c.getCount();
+        Log.d("", "== n contacts is: " + nContacts);
+        
+        do{
+            ContactDTO contact = new ContactDTO();
+            contact.name = c.getString(nameCol);
+            contact.phoneNumber = Utility.stripExtraCharsFromPhone(c.getString(numCol));
+            
+            if (contact.phoneNumber.length() == 10) { 
+            	Log.d("", "== number accepted is: " + contact.phoneNumber);
+            } else { 
+            	Log.d("", "== number rejected was: " + contact.phoneNumber);
+            }
+            
+            if (contact.phoneNumber.length() == 10)
+            	Globals.allContactsInAddressBook.add(contact);
+ 
+            
+        } while(c.moveToNext());
+        
+        Log.d("", "== number contacts: " + Globals.allContactsInAddressBook.size());
 	}
+	
+	public static String getNameFromNumber(String number) { 
+	
+		for (ContactDTO contact : Globals.allContactsInAddressBook) { 
+			String num = contact.phoneNumber;
+			num = Utility.stripExtraCharsFromPhone(num);
+			
+			if (num.equalsIgnoreCase(number))
+				return contact.name;
+		}
+		
+		return "";
+	}
+	
+	public static void clearContactsInParty() { 
+		
+		for (ContactDTO c : Globals.allContactsInAddressBook) { 
+			c.selected = false;
+		}
+	}
+	
 }
