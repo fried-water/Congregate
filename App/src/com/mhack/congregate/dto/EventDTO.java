@@ -6,4 +6,6 @@ public class EventDTO {
 	public String location = "";
 	public String date = "";
 	public String description = "";
+	public int status;
+	public String host;
 }

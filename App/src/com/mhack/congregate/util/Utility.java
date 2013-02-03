@@ -114,8 +114,8 @@ public class Utility {
 	}
 
 	public static void sendSMS(String phoneNumber, String message) {
-		SmsManager smsManager = SmsManager.getDefault();
-		smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+	    //SmsManager smsManager = SmsManager.getDefault();
+	    //smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 	}
 
 	public static void fillContactsList(Activity act) {

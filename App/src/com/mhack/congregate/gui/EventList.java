@@ -21,8 +21,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.mhack.congregate.R;
 import com.mhack.congregate.dto.EventDTO;
@@ -114,13 +116,77 @@ public class EventList extends Activity {
 							if(guestEvents.length() > 0) {
 								for(int i = 0; i < guestEvents.length();i++) {
 									try {
-										JSONObject event = (JSONObject)guestEvents.get(i);
+										final JSONObject event = (JSONObject)guestEvents.get(i);
 										
 										Log.d("WOO", event.toString());
 										view = getLayoutInflater().inflate(R.layout.event_cell_invitation, mainLayout, false);
 										
 										((TextView)view.findViewById(R.id.txt_event_name)).setText(event.getString("name"));
 										((TextView)view.findViewById(R.id.txt_event_details)).setText("On " + Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat) + " at " + event.getString("location"));
+										
+										((RadioGroup)view.findViewById(R.id.radioGroup1)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
+											
+											@Override
+											public void onCheckedChanged(RadioGroup group, int checkedId) {
+												switch(checkedId) {
+												case R.id.radio_going:
+													new Thread(new Runnable() {
+														
+														@Override
+														public void run() {
+															try {
+																Utility.updateStatus(getApplicationContext(), 
+																		event.getString("name"),
+																		event.getString("host"), 
+																		Globals.prefs.getString(Const.phoneNumber, ""), 1);
+															} catch (JSONException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
+															
+														}
+													}).start();
+													break;
+												case R.id.radio_maybe:
+														new Thread(new Runnable() {
+														
+														@Override
+														public void run() {
+															try {
+																Utility.updateStatus(getApplicationContext(), 
+																		event.getString("name"),
+																		event.getString("host"), 
+																		Globals.prefs.getString(Const.phoneNumber, ""), 2);
+															} catch (JSONException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
+															
+														}
+													}).start();
+													break;
+												case R.id.radio_not_going:
+														new Thread(new Runnable() {
+														
+														@Override
+														public void run() {
+															try {
+																Utility.updateStatus(getApplicationContext(), 
+																		event.getString("name"),
+																		event.getString("host"), 
+																		Globals.prefs.getString(Const.phoneNumber, ""), 3);
+															} catch (JSONException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
+															
+														}
+													}).start();
+													break;
+												}
+												
+											}
+										});
 										
 										switch(event.getInt("status"))
 										{
@@ -138,19 +204,32 @@ public class EventList extends Activity {
 											break;
 										}
 									
-										
+										view.setOnClickListener(new View.OnClickListener() {
+											
+											@Override
+											public void onClick(View v) {
+												EventDTO eventDTO = new EventDTO();
+												try {
+													eventDTO.name = event.getString("name");
+													eventDTO.description = event.getString("description");
+													eventDTO.date = Utility.convertDate(event.getString("date"), Const.serverDateFormat, Const.appDateFormat);
+													eventDTO.location = event.getString("location");
+													eventDTO.status = event.getInt("status");
+													eventDTO.host = event.getString("host");
+												} catch (JSONException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+												
+												Globals.currentEvent = eventDTO;
+												Intent intent = new Intent().setClass(EventList.this, ViewEvent.class);
+												startActivity(intent);
+											}
+										});
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-									
-									view.setOnClickListener(new View.OnClickListener() {
-										
-										@Override
-										public void onClick(View v) {
-											
-										}
-									});
 									
 									mainLayout.addView(view);
 								}
