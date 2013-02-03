@@ -43,6 +43,8 @@
         <activity android:name="com.mhack.congregate.gui.Registration" android:screenOrientation="portrait"></activity>
         <activity android:name="com.mhack.congregate.gui.CreateEvent" android:screenOrientation="portrait"></activity>
         <activity android:name="com.mhack.congregate.gui.ContactSelection" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.mhack.congregate.gui.ViewFriendStatusForEvent" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.mhack.congregate.gui.ManageEvent" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
