@@ -107,7 +107,7 @@ public class EventList extends Activity {
 							
 							View view;
 							
-							view = getLayoutInflater().inflate(R.layout.message_cell, mainLayout, false);
+							view = getLayoutInflater().inflate(R.layout.event_label, mainLayout, false);
 							((TextView)view.findViewById(R.id.eventHeader)).setText("Upcoming Events");
 							mainLayout.addView(view);
 							
