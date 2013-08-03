@@ -1,7 +1,5 @@
 package com.mhack.congregate.adapter;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -58,19 +56,15 @@ public class ContactsAdapter extends ArrayAdapter<ContactDTO> {
 			
 			Log.d("", "== name: " + contact.name + " #: " + contact.phoneNumber);
 			
-			if (Globals.contactsForEvent.contains(contact)) { 
-				chk.setChecked(true);
-			}
-			
 			chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) { 
 						Log.d("", "=== MAY DAY MAY DAY JUST CHECKED OFF A CONTACT FOR THE PARTY!!!");
-						Globals.contactsForEvent.add(contact);
+						contact.selected = true;
 					} else { 
-						Globals.contactsForEvent.remove(contact);
+						contact.selected = false;
 					}
 				}
 			});

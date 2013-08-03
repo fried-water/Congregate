@@ -16,11 +16,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Contacts.People;
+import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -114,8 +116,52 @@ public class Utility {
 	}
 
 	public static void sendSMS(String phoneNumber, String message) {
-	    //SmsManager smsManager = SmsManager.getDefault();
-	    //smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+		 SmsManager smsManager = SmsManager.getDefault();
+		 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+	}
+	
+	
+
+	public static void fillContactsList2(Activity act) {
+
+		/**
+		 * Fill contact DTO with information for adapter!
+		 */
+		ContentResolver cr = act.getContentResolver();
+		Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+				null, null, null);
+
+		if (cur.getCount() > 0) {
+			while (cur.moveToNext()) {
+				String id = cur.getString(cur
+						.getColumnIndex(ContactsContract.Contacts._ID));
+				String name = cur
+						.getString(cur
+								.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+				if (Integer
+						.parseInt(cur.getString(cur
+								.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+					Cursor pCur = cr.query(
+							ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+							null,
+							ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+									+ " = ?", new String[] { id }, null);
+					while (pCur.moveToNext()) {
+
+						ContactDTO c = new ContactDTO();
+						c.phoneNumber = Utility.stripExtraCharsFromPhone(pCur.getString(26));
+						c.name = name;
+
+						if (c.phoneNumber.length() == 10)
+							Globals.allContactsInAddressBook.add(c);
+					}
+					pCur.close();
+				}
+			}
+		}
+		
+		sortListAndRemoveDups();
 	}
 
 	public static void fillContactsList(Activity act) {
@@ -153,7 +199,7 @@ public class Utility {
 		Log.d("",
 				"== number contacts: "
 						+ Globals.allContactsInAddressBook.size());
-		
+
 		sortListAndRemoveDups();
 	}
 
@@ -165,8 +211,8 @@ public class Utility {
 
 			boolean foundDup = false;
 			for (int j = 0; j < dupsRemoved.size(); j++) {
-				if (Globals.allContactsInAddressBook.get(i).phoneNumber.equals(dupsRemoved
-						.get(j).phoneNumber)) {
+				if (Globals.allContactsInAddressBook.get(i).phoneNumber
+						.equals(dupsRemoved.get(j).phoneNumber)) {
 					foundDup = true;
 				}
 			}
@@ -176,15 +222,16 @@ public class Utility {
 		}
 
 		Globals.allContactsInAddressBook = dupsRemoved;
-		
+
 		ContactDTO leslie = new ContactDTO();
 		leslie.name = "Lorrie Cheng";
 		leslie.phoneNumber = "6479937121";
 		leslie.selected = false;
-		
+
 		Globals.allContactsInAddressBook.add(leslie);
-		
-		Collections.sort(Globals.allContactsInAddressBook, new ContactComparator());
+
+		Collections.sort(Globals.allContactsInAddressBook,
+				new ContactComparator());
 	}
 
 	public static String getNameFromNumber(String number) {

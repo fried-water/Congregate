@@ -48,6 +48,8 @@ public class Launch extends Activity {
         mSystemUiHider.hide();
         
         Utility.init(Launch.this);
+        Utility.fillContactsList2(Launch.this);
+
     }
 
     @Override
@@ -69,7 +71,6 @@ public class Launch extends Activity {
 
 			public void onFinish() {
 
-		        Utility.fillContactsList(Launch.this);
 		    	
 				if (Globals.prefs.contains(Const.phoneNumber) && !"".equalsIgnoreCase(Globals.prefs.getString(Const.phoneNumber, ""))) { 
 					Intent intent = new Intent().setClass(Launch.this, EventList.class);

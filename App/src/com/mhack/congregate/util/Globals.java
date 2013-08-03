@@ -14,10 +14,8 @@ public class Globals {
     
     static public EventDTO currentEvent;
     
-    static public ArrayList<ContactDTO> contactsForEvent;
     static public ArrayList<ContactDTO> allContactsInAddressBook;
     static { 
-    	contactsForEvent = new ArrayList<ContactDTO>();
     	allContactsInAddressBook = new ArrayList<ContactDTO>();
     }
 }

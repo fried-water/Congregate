@@ -104,7 +104,7 @@ public class Registration extends Activity {
 								
 								JSONObject res = DataTransfer.postJSONResult(getApplicationContext(), Const.url+"register", params);
 								
-								if(res != null && DataTransfer.verifyEMPStatus(res)) {
+								if(res != null && DataTransfer.verifyResultStatus(res)) {
 									Globals.prefEdit.putString(Const.phoneNumber, num);
 									Globals.prefEdit.putString(Const.name, name);
 									Globals.prefEdit.commit();
